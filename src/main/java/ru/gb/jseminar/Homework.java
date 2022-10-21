@@ -23,6 +23,7 @@ import java.util.Arrays;
          String json = "{'firstName' : 'Ivan', 'secondName' : 'Ivanov', 'age' : '27', 'city' : 'Ivanovo'}";
          query = hw.updateQueryByJson(q, json);
          log.info(query);
+//
      }
 
      public String updateQueryByArrays(String q, String[] paramName, String[] paramValue){
