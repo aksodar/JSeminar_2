@@ -1,5 +1,10 @@
 package ru.gb.jseminar;
 
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Logger;
+
 public class Task3 {
 
     // Напишите программу, которая
@@ -9,23 +14,63 @@ public class Task3 {
     // 4) читает сохраненный файл и выводит содержимое в логгер
     // 5) удаляет сохраненный файл
     public static void main(String[] args) {
+        Task3 t3 = new Task3();
         String fileUrl = "https://raw.githubusercontent.com/aksodar/JSeminar_2/master/src/main/resources/example.txt";
-
+        String fileContent = t3.download(fileUrl);
+        String name = "John";
+        fileContent = t3.change(name, fileContent);
+        t3.saveOnLocal("example.txt", fileContent);
+        t3.read("example.txt");
     }
 
-    public String download(String url, String localFilename) {
+    public String download(String url){
+        try (
+            BufferedInputStream bf = new BufferedInputStream(new URL(url).openStream());
+            ){
+            String result = new String(bf.readAllBytes());
 
-        return "";
+
+            return result;
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-
     public String change(String name, String fileContent) {
 
-        return "";
+        return String.format(fileContent,name);
     }
+
+    public void read(String LocalFilename){
+        try {
+            FileReader rf = new FileReader(LocalFilename);
+            BufferedReader bfr = new BufferedReader(rf);
+            Logger log = Logger.getLogger(Task3.class.getName());
+            while (bfr.readLine()!=null) {
+                log.info(bfr.readLine());
+            }
+            rf.close();
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
     public void saveOnLocal(String fileName, String fileContent) {
+        try {
+            FileWriter fw = new FileWriter(fileName);
+            BufferedWriter bfw = new BufferedWriter(fw);
+            bfw.write(fileContent);
+            bfw.flush();
+            fw.close();
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     public boolean removeFromLocale(String fileName) {
 
