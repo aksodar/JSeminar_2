@@ -12,11 +12,13 @@ public class Homework {
     public static void main(String[] args) {
         String sqlRequest = "select * from students";
         Homework HW2 = new Homework();
-        String[] str2 = {"1", "2"};
-        String[] str1 = {"2", "1"};
-//        String[] str2 = {"0"};
-//        String[] str2 = {};
+        String[] str1 = {"Name_1", "Name_2"};
+        String[] str2 = {"Value_1", "Value_2"};
+        String jsonStr = "{\"Name_1\": \"Value_1\", \"Name_2\": \"Value_2\"}";
+        System.out.println("First version:");
         System.out.println(HW2.updateQueryByArrays(sqlRequest, str1, str2));
+        System.out.println("Second version:");
+        System.out.println(HW2.updateQueryByJson(sqlRequest, jsonStr));
     }
 
     public String updateQueryByArrays(String q, String[] paramName, String[] paramValue) {
@@ -45,8 +47,23 @@ public class Homework {
         }
     }
 
-    public String updateQueryByJson(String q, String[] paramName, String[] paramValue){
-
-        return "";
+    public String updateQueryByJson(String q, String js){
+        if (js.length() == 0){
+            return q;
+        } else {
+            StringBuilder sb = new StringBuilder(q);
+            sb.append(" WHERE ");
+            js = js.substring(1, js.length() - 1);
+            String[] jsArray = js.split(", ");
+            for (int i = 0; i < jsArray.length; i++) {
+                jsArray[i] = jsArray[i].substring(1, jsArray[i].length() - 1);
+                jsArray[i] = jsArray[i].replace("\": \"", "=");
+                sb.append(jsArray[i]);
+                if (i < jsArray.length - 1){
+                    sb.append(" AND ");
+                }
+            }
+            return sb.toString();
+        }
     }
 }
