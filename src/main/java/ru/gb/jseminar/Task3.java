@@ -9,7 +9,7 @@ public class Task3 {
     // 4) читает сохраненный файл и выводит содержимое в логгер
     // 5) удаляет сохраненный файл
     public static void main(String[] args) {
-        String fileUrl = "https://raw.githubusercontent.com/aksodar/JSeminar_2/master/src/main/resources/example.txt";
+       // String fileUrl = "https://raw.githubusercontent.com/aksodar/JSeminar_2/master/src/main/resources/example.txt";
 
     }
 
