@@ -1,5 +1,5 @@
 package ru.gb.jseminar;
-
+import java.util.logging.Logger;
 public class Homework {
 
     // Дана строка sql-запроса "select * from students".
@@ -10,16 +10,46 @@ public class Homework {
     //      Пример json: {"firstName": "Ivan", "secondName": "Ivanov", ....}
     // Результат работы методов: "select * from students where firstName = 'Ivan' and ...".
     public static void main(String[] args) {
-
+        String [] paramName = {"firstName", "secondName", "sex", "birthDate"};
+        String [] paramValue = {"Dmitrii", "Malofeyev", "male", "11.11.1983"};
+        String q = "SELECT * FROM students WHERE ";
+        Homework hw = new Homework();
+        Logger log = Logger.getLogger(Homework.class.getName());
+        String query = hw.updateQueryByArrays(q, paramName, paramValue);
+        log.info(query);
+        String json = "{'firstName' : 'Dmitrii', 'secondName' : 'Malofeyev', 'sex' : 'male', 'birthDate' : '11.11.1983'}";
+        query = hw.updateQueryByJson(q, json);
+        log.info(query);
     }
 
     public String updateQueryByArrays(String q, String[] paramName, String[] paramValue){
-
-        return "";
+        StringBuilder query = new StringBuilder();
+        query.append(q);
+        for (int i = 0; i < paramName.length; i++){
+            query.append(paramName[i]);
+            query.append(" = ");
+            query.append(paramValue[i]);
+            if (i < paramName.length - 1) {
+                query.append(" AND ");
+            }
+        }
+        return query.toString();
     }
 
     public String updateQueryByJson(String q, String json){
-
-        return "";
+        StringBuilder query = new StringBuilder();
+        query.append(q);
+        String [] jsPairs = json.substring(1, json.length()-1).split(", ");
+        String [] jsWords = new String [2];
+        for (int i = 0; i < jsPairs.length; i++) {
+            jsWords = jsPairs[i].split(" : ");
+            query.append(jsWords[0].replace("'", ""));
+            query.append(" = ");
+            query.append(jsWords[1].replace("'", ""));
+            if (i < jsPairs.length - 1) {
+                query.append(" AND ");
+            }
+        }
+        return query.toString();
     }
 }
