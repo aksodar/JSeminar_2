@@ -27,6 +27,7 @@ public class Task0 {
                 }
             }
             result = new StringBuilder(result).append(count).append(jewels.charAt(i)).toString();
+            count = 0;
             
         }
 
