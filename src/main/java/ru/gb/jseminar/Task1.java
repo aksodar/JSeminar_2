@@ -1,5 +1,7 @@
 package ru.gb.jseminar;
 
+import java.util.logging.Logger;
+
 public class Task1 {
 
     // Вам дается строка S и целочисленный массив индексов int index[s.length].
