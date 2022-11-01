@@ -38,9 +38,9 @@ public class Task3 {
         return String.format(name, fileContent);
     }
 
-    public void read(String localFilename){
-
-    }
+//    public void read(String localFilename){
+//
+//    }
 
     public void saveOnLocal(String fileName, String fileContent) {
         try {
