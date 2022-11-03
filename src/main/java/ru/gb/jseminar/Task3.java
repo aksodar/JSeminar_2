@@ -1,5 +1,10 @@
 package ru.gb.jseminar;
 
+import java.io.*;
+import java.net.URL;
+import java.util.Scanner;
+import java.util.logging.Logger;
+
 public class Task3 {
 
     // Напишите программу, которая
@@ -9,30 +14,61 @@ public class Task3 {
     // 4) читает сохраненный файл и выводит содержимое в логгер
     // 5) удаляет сохраненный файл
     public static void main(String[] args) {
+        Task3 task = new Task3();
         String fileUrl = "https://raw.githubusercontent.com/aksodar/JSeminar_2/master/src/main/resources/example.txt";
-
+        String fileContent = task.download(fileUrl);
+        Scanner sc = new Scanner(System.in);
+        String name = sc.nextLine();
+        fileContent = task.change(name,fileContent);
+        task.saveOnLocal("example.txt", fileContent);
+        task.read("example.txt");
+        task.removeFromLocale(fileContent);
     }
 
-    public String download(String url, String localFilename) {
-
-        return "";
+    public String download(String urlText) {
+        try (
+            BufferedInputStream bf = new BufferedInputStream(new URL(urlText).openStream())) {
+            String result = new String(bf.readAllBytes());
+            return result;
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 
     public String change(String name, String fileContent) {
 
-        return "";
+        return String.format(fileContent, name);
     }
 
     public void read(String localFilename){
-
+        try {
+            FileReader rf = new FileReader(localFilename);
+            BufferedReader bfr = new BufferedReader(rf);
+            Logger log = Logger.getLogger(Task3.class.getName());
+            log.info(bfr.readLine());
+            rf.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void saveOnLocal(String fileName, String fileContent) {
-
+        try {
+            FileWriter fw = new FileWriter(fileName);
+            BufferedWriter bfw = new BufferedWriter((fw));
+            bfw.write(fileContent);
+            bfw.flush();
+            fw.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean removeFromLocale(String fileName) {
-
+        File file = new File("example.txt");
+        file.delete();
+        Logger log = Logger.getLogger(Task3.class.getName());
+        log.info("Файл удален!");
         return false;
     }
 }
