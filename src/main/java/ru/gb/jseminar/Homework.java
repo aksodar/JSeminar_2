@@ -54,7 +54,7 @@ public class Homework {
         }
         else {
             for (int i = 0; i < arrStrings.length; i++) {
-                sb.append(arrStrings[i].split(": ")[0]
+                sb.append(arrStrings[i].split(": ")[0].substring(1, arrStrings[i].split(": ")[0].length()-1)
                         + " = "
                         + (arrStrings[i].split(": ")[1]));
                 if (i != arrStrings.length - 1) {
