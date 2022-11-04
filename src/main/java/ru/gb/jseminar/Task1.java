@@ -21,7 +21,6 @@ public class Task1 {
         char[] result = new char[s.length()+1];
         char [] str = new char[s.length()];
         str = s.toCharArray();
-        System.out.println(str);
         int i=0;
         for (int unit : index) {
             result[unit-1] = str[i];
