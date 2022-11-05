@@ -22,6 +22,12 @@ public class Homework {
     }
 
     public String updateQueryByArrays(String q, String[] paramName, String[] paramValue){
+        if (paramName.length==0 || paramValue.length==0){
+            throw new IllegalStateException("запрос пустой");
+        }
+        if (paramName.length != paramValue.length){
+            throw new IllegalStateException("запрос сформирован не правильно");
+        }
         StringBuilder result = new StringBuilder();
         result.append(q+" ");
         result.append("WHERE"+" ");
@@ -36,6 +42,9 @@ public class Homework {
     }
 
     public String updateQueryByJson(String q, String json){
+        if (json.length()==0){
+            throw new IllegalStateException("запрос сформирован не правильно");
+        }
         StringBuilder result = new StringBuilder();
         result.append(q);
         result.append(" WHERE"+" ");
