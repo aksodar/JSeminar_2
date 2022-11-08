@@ -33,22 +33,23 @@ public class Homework {
     public String updateQueryByArrays(String q, String[] paramName, String[] paramValue) {
         StringBuilder result = new StringBuilder(q);
         if (paramName.length == 0 || paramValue.length == 0) return result.toString();
-
-        result.append("where ");
-        for (int i = 0; i < paramValue.length; i++) {
-            result.append(paramName[i]);
-            result.append(" = ");
-            result.append(paramValue[i]);
-            if (i < paramValue.length - 1) result.append(" and ");
-            else result.append(".");
-
+        if (paramName.length == paramValue.length){
+            result.append("WHERE ");
+            for (int i = 0; i < paramValue.length; i++) {
+                result.append(paramName[i]);
+                result.append(" = ");
+                result.append(paramValue[i]);
+                if (i < paramValue.length - 1) result.append(" and ");
+                else result.append(".");
+            }
+            return result.toString();
         }
-
-        return result.toString();
+        else return result.toString();
     }
 
     public String updateQueryByJson(String q, String json) {
         StringBuilder result = new StringBuilder(q);
+        result.append("WHERE ");
         String jsonSub = json.substring(1, json.length() - 1);
         String[] jsonSplit = jsonSub.split(", ");
         for (String words : jsonSplit) {
