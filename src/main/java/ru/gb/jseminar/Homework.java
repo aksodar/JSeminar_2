@@ -20,7 +20,7 @@ public class Homework {
     // Результат работы методов: "select * from students where firstName = 'Ivan' and ...".
     public static void main(String[] args) {
         Homework hw = new Homework();
-        String q = "select * from student where ";
+        String q = "select * from student ";
         String[] paramName = {"firstName", "secondName", "phoneNumber", "position"};
         String[] paramValue = {"Ivan", "Ivanov", "987654", "manager"};
         String json = "{\"firstName\": \"Ivan\", \"secondName\": \"Ivanov\", \"phoneNumber\": \"987654\", \"position\": \"manager\"}";
@@ -32,6 +32,9 @@ public class Homework {
 
     public String updateQueryByArrays(String q, String[] paramName, String[] paramValue) {
         StringBuilder result = new StringBuilder(q);
+        if (paramName.length == 0 || paramValue.length == 0) return result.toString();
+
+        result.append("where ");
         for (int i = 0; i < paramValue.length; i++) {
             result.append(paramName[i]);
             result.append(" = ");
@@ -39,8 +42,8 @@ public class Homework {
             if (i < paramValue.length - 1) result.append(" and ");
             else result.append(".");
 
-
         }
+
         return result.toString();
     }
 
