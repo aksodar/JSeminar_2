@@ -44,7 +44,7 @@ public class Homework {
             }
             return result.toString();
         }
-        else return result.toString();
+        else throw new IllegalStateException("arrays not simmetry");
     }
 
     public String updateQueryByJson(String q, String json) {
